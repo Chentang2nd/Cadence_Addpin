@@ -21,7 +21,7 @@ procedure(addPinsToSelectedInst()
                     term = it~>term
                     dir = term~>direction
                     pinName = term~>name
-                    pinUse = term~>use || "signal"
+                    pinUse = if(term~>use term~>use "signal")
                     
                     pinMasterName = case(dir
                         ("input" "ipin")
@@ -77,6 +77,7 @@ procedure(addPinsToSelectedInst()
                         printf("Error: Could not open basic library pin master '%s'.\n" pinMasterName)
                     )
                 )
+                schCheck(cv)
                 printf("Successfully added %d pins with wires for instance '%s'.\n" length(instTerms) inst~>name)
             else
                 printf("Warning: No internal pins found for the selected instance.\n")
